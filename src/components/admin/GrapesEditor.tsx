@@ -2,29 +2,35 @@ import { useEffect, useRef, useState } from "react";
 import grapesjs, { Editor } from "grapesjs";
 import "grapesjs/dist/css/grapes.min.css";
 import "grapesjs-preset-webpage";
+import { SiteContent } from "@/content/siteContent";
+import { generateSiteHtml } from "@/lib/contentToHtml";
 
 interface GrapesEditorProps {
   onSave?: (html: string, css: string) => void;
+  initialContent?: SiteContent;
 }
 
-const GrapesEditor = ({ onSave }: GrapesEditorProps) => {
+const GrapesEditor = ({ onSave, initialContent }: GrapesEditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
 
   useEffect(() => {
     if (!editorRef.current) return;
 
+    // Check if there's saved content in localStorage
+    const savedHtml = localStorage.getItem("creavisuel-gjs-html");
+    const savedCss = localStorage.getItem("creavisuel-gjs-css");
+    
+    // Generate initial HTML from content if no saved version exists
+    const initialHtml = savedHtml || (initialContent ? generateSiteHtml(initialContent) : "");
+    const initialCss = savedCss || "";
+
     const gjsEditor = grapesjs.init({
       container: editorRef.current,
-      height: "100vh",
+      height: "100%",
       width: "auto",
-      storageManager: {
-        type: "local",
-        autosave: true,
-        autoload: true,
-        stepsBeforeSave: 1,
-        id: "creavisuel-gjs-",
-      },
+      fromElement: false,
+      storageManager: false, // We'll handle storage manually
       plugins: ["grapesjs-preset-webpage"],
       pluginsOpts: {
         "grapesjs-preset-webpage": {
@@ -89,6 +95,14 @@ const GrapesEditor = ({ onSave }: GrapesEditorProps) => {
         ],
       },
     });
+
+    // Load the initial content
+    if (initialHtml) {
+      gjsEditor.setComponents(initialHtml);
+      if (initialCss) {
+        gjsEditor.setStyle(initialCss);
+      }
+    }
 
     // Add custom blocks for CréaVisuel
     gjsEditor.BlockManager.add("hero-section", {
@@ -287,23 +301,37 @@ const GrapesEditor = ({ onSave }: GrapesEditorProps) => {
       `,
     });
 
+    // Auto-save on changes
+    gjsEditor.on("storage:store", () => {
+      const html = gjsEditor.getHtml();
+      const css = gjsEditor.getCss();
+      localStorage.setItem("creavisuel-gjs-html", html);
+      localStorage.setItem("creavisuel-gjs-css", css || "");
+    });
+
+    // Save shortcut (Ctrl+S)
+    document.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        const html = gjsEditor.getHtml();
+        const css = gjsEditor.getCss();
+        localStorage.setItem("creavisuel-gjs-html", html);
+        localStorage.setItem("creavisuel-gjs-css", css || "");
+        if (onSave) {
+          onSave(html, css || "");
+        }
+      }
+    });
+
     setEditor(gjsEditor);
 
     return () => {
       gjsEditor.destroy();
     };
-  }, []);
-
-  const handleSave = () => {
-    if (editor && onSave) {
-      const html = editor.getHtml();
-      const css = editor.getCss();
-      onSave(html, css || "");
-    }
-  };
+  }, [initialContent]);
 
   return (
-    <div className="gjs-editor-container flex h-screen bg-[#1a1a1a]">
+    <div className="gjs-editor-container flex h-full bg-[#1a1a1a]">
       {/* Left Panel - Blocks */}
       <div className="w-64 bg-[#2a2a2a] border-r border-[#3a3a3a] flex flex-col overflow-hidden">
         <div className="p-3 border-b border-[#3a3a3a]">

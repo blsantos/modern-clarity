@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useContent } from "@/contexts/ContentContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, Lock, Home, Save, Eye, Monitor, Tablet, Smartphone } from "lucide-react";
+import { LogOut, Lock, Home, Save, Eye, Monitor, Tablet, Smartphone, RotateCcw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import GrapesEditor from "@/components/admin/GrapesEditor";
 import "@/components/admin/GrapesEditorStyles.css";
@@ -52,16 +53,29 @@ const AdminLogin = () => {
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
+  const { content } = useContent();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [editorKey, setEditorKey] = useState(0);
 
   const handleSave = (html: string, css: string) => {
-    // Save to localStorage for now
-    localStorage.setItem("creavisuel-page-html", html);
-    localStorage.setItem("creavisuel-page-css", css);
+    localStorage.setItem("creavisuel-gjs-html", html);
+    localStorage.setItem("creavisuel-gjs-css", css);
     toast({ 
       title: "Page sauvegardée", 
       description: "Vos modifications ont été enregistrées localement." 
+    });
+  };
+
+  const handleReset = () => {
+    localStorage.removeItem("creavisuel-gjs-html");
+    localStorage.removeItem("creavisuel-gjs-css");
+    localStorage.removeItem("creavisuel-gjs-components");
+    localStorage.removeItem("creavisuel-gjs-styles");
+    setEditorKey(prev => prev + 1);
+    toast({ 
+      title: "Éditeur réinitialisé", 
+      description: "Le contenu original a été restauré." 
     });
   };
 
@@ -124,13 +138,21 @@ const AdminDashboard = () => {
             Aperçu
           </Button>
           <Button 
+            variant="ghost" 
+            size="sm" 
+            className="h-8 text-orange-400 hover:text-orange-300 hover:bg-[#3a3a3a]"
+            onClick={handleReset}
+          >
+            <RotateCcw className="w-4 h-4 mr-2" />
+            Reset
+          </Button>
+          <Button 
             size="sm" 
             className="h-8 bg-primary hover:bg-primary/90"
             onClick={() => {
-              // Trigger save from editor
               toast({ 
                 title: "Sauvegarde", 
-                description: "Utilisez Ctrl+S ou le bouton dans l'éditeur pour sauvegarder." 
+                description: "Utilisez Ctrl+S pour sauvegarder vos modifications." 
               });
             }}
           >
@@ -151,7 +173,7 @@ const AdminDashboard = () => {
 
       {/* Editor */}
       <div className="flex-1 overflow-hidden">
-        <GrapesEditor onSave={handleSave} />
+        <GrapesEditor key={editorKey} onSave={handleSave} initialContent={content} />
       </div>
     </div>
   );
