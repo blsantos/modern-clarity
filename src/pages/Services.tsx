@@ -1,7 +1,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BackgroundVideo from "@/components/BackgroundVideo";
 import { Check, Sparkles, Zap, Calendar, BarChart3, Users, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -78,8 +80,17 @@ const Services = () => {
       <Header />
       <main className="pt-24">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="relative py-20 bg-gradient-to-b from-primary/5 to-background overflow-hidden">
+          {/* Robot mascot video */}
+          <BackgroundVideo 
+            src="/videos/robot-present.mp4" 
+            position="right" 
+            opacity={0.1} 
+            size="xl"
+            className="hidden lg:block -mr-10"
+          />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-6">
               Nos Services
             </span>
@@ -123,17 +134,27 @@ const Services = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-secondary">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="relative py-20 bg-secondary overflow-hidden">
+          <BackgroundVideo 
+            src="/videos/robot-float.mp4" 
+            position="left" 
+            opacity={0.1} 
+            size="lg"
+            className="hidden md:block"
+          />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-6">
               Prêt à transformer votre présence digitale ?
             </h2>
             <p className="text-secondary-foreground/80 text-lg mb-8 max-w-2xl mx-auto">
               Contactez-nous pour discuter de vos besoins et découvrir comment CréaVisuel peut vous aider.
             </p>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Demander un devis
-            </Button>
+            <Link to="/contact">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8">
+                Demander un devis
+              </Button>
+            </Link>
           </div>
         </section>
       </main>
