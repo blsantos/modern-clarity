@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import heroImage from "@/assets/creavisuel-hero.png";
+import { useContent } from "@/contexts/ContentContext";
 
 const Hero = () => {
+  const { content } = useContent();
+  const { hero } = content;
+
   return (
     <section className="relative min-h-screen pt-20 lg:pt-24 overflow-hidden gradient-hero">
       {/* Decorative elements */}
@@ -17,29 +21,28 @@ const Hero = () => {
           <div className="order-2 lg:order-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6 animate-fade-in" style={{ animationDelay: "0.1s", opacity: 0 }}>
               <Sparkles className="w-4 h-4" />
-              <span>Propulsé par l'Intelligence Artificielle</span>
+              <span>{hero.badge}</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6 animate-fade-in-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
               <span className="text-gradient">CréaVisuel</span>
               <br />
-              <span className="text-secondary">L'IA qui propulse votre</span>
+              <span className="text-secondary">{hero.title}</span>
               <br />
-              <span className="text-foreground">communication digitale</span>
+              <span className="text-foreground">{hero.titleHighlight}</span>
             </h1>
             
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 animate-fade-in-up" style={{ animationDelay: "0.4s", opacity: 0 }}>
-              Créez du contenu professionnel pour vos réseaux sociaux en quelques clics. 
-              Texte captivant + image attrayante, générés instantanément par notre IA.
+              {hero.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: "0.6s", opacity: 0 }}>
               <Button variant="hero" size="xl">
-                Demander une démo
+                {hero.ctaPrimary}
                 <ArrowRight className="w-5 h-5" />
               </Button>
               <Button variant="heroOutline" size="xl">
-                Découvrir les fonctionnalités
+                {hero.ctaSecondary}
               </Button>
             </div>
 
@@ -47,20 +50,15 @@ const Hero = () => {
             <div className="mt-10 pt-8 border-t border-border/50 animate-fade-in-up" style={{ animationDelay: "0.8s", opacity: 0 }}>
               <p className="text-sm text-muted-foreground mb-4">Déjà adopté par de nombreux professionnels</p>
               <div className="flex items-center justify-center lg:justify-start gap-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground">15+</div>
-                  <div className="text-xs text-muted-foreground">Métiers</div>
-                </div>
-                <div className="w-px h-10 bg-border" />
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground">∞</div>
-                  <div className="text-xs text-muted-foreground">Générations</div>
-                </div>
-                <div className="w-px h-10 bg-border" />
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground">+30%</div>
-                  <div className="text-xs text-muted-foreground">Clients</div>
-                </div>
+                {hero.stats.map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground">{stat.label}</div>
+                    {index < hero.stats.length - 1 && (
+                      <div className="hidden" />
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

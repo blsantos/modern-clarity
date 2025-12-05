@@ -1,6 +1,9 @@
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { useContent } from "@/contexts/ContentContext";
 
 const Footer = () => {
+  const { content } = useContent();
+  const { footer } = content;
   const currentYear = new Date().getFullYear();
 
   return (
@@ -14,8 +17,7 @@ const Footer = () => {
               <span className="text-secondary-foreground">Visuel</span>
             </div>
             <p className="text-secondary-foreground/70 max-w-sm mb-6">
-              L'IA qui propulse votre communication digitale. 
-              Un service de B2Santos Communication.
+              {footer.description}
             </p>
             <div className="flex gap-4">
               <a 
@@ -61,7 +63,8 @@ const Footer = () => {
             <ul className="space-y-3 text-secondary-foreground/70">
               <li><a href="#" className="hover:text-primary transition-colors">Demander une démo</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Support</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">contact@b2santos.com</a></li>
+              <li><a href={`mailto:${footer.email}`} className="hover:text-primary transition-colors">{footer.email}</a></li>
+              <li><a href={`tel:${footer.phone}`} className="hover:text-primary transition-colors">{footer.phone}</a></li>
             </ul>
           </div>
         </div>
