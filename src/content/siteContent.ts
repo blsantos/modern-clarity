@@ -125,12 +125,12 @@ export const defaultContent: SiteContent = {
       {
         step: "02",
         title: "Création automatisée",
-        description: "Génération de visuels automatisés via APItemplate et visuels créatifs personnalisés selon vos besoins.",
+        description: "Génération de visuels automatisés et visuels créatifs personnalisés selon vos besoins spécifiques.",
       },
       {
         step: "03",
         title: "Approbation client",
-        description: "Validation des visuels via une plateforme intégrée pour garantir l'alignement avec vos attentes.",
+        description: "Validation des visuels via notre plateforme intégrée pour garantir l'alignement avec vos attentes.",
       },
       {
         step: "04",
@@ -164,7 +164,7 @@ export const defaultContent: SiteContent = {
       { value: "24/7", label: "disponible" },
     ],
     items: [
-      { title: "Automatisation complète", description: "Génération automatique de visuels basés sur vos données via des outils comme APItemplate et Integromat." },
+      { title: "Automatisation complète", description: "Génération automatique de visuels basés sur vos données grâce à nos outils d'automatisation IA." },
       { title: "Visuels créatifs sur mesure", description: "Production de visuels personnalisés pour des sujets choisis, avec une approche design élaborée." },
       { title: "Gestion simplifiée", description: "Coordination complète de l'approbation à la publication sur toutes vos plateformes sociales." },
       { title: "Stratégie de contenu", description: "Développement d'une ligne éditoriale adaptée à vos objectifs et votre identité de marque." },
@@ -191,7 +191,7 @@ export const defaultContent: SiteContent = {
         name: "Essentiel",
         description: "Pour démarrer",
         price: "250€/mois",
-        features: ["12 visuels automatisés", "4 visuels créatifs", "1 réseau social", "Plateforme de gestion", "Support email"],
+        features: ["12 visuels automatisés", "4 visuels créatifs", "1 réseau social", "Hub de gestion dédié", "Support email"],
         highlighted: false,
         cta: "Choisir ce forfait",
       },

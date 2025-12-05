@@ -49,12 +49,16 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold">
-              Se connecter
-            </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-              Demander une démo
-            </Button>
+            <Link to="/admin">
+              <Button variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold">
+                Se connecter
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+                Demander une démo
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -85,12 +89,16 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 mt-4 px-4">
-                <Button variant="outline" className="w-full border-2 border-primary text-primary font-semibold">
-                  Se connecter
-                </Button>
-                <Button className="w-full bg-primary text-primary-foreground font-semibold">
-                  Demander une démo
-                </Button>
+                <Link to="/admin">
+                  <Button variant="outline" className="w-full border-2 border-primary text-primary font-semibold">
+                    Se connecter
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button className="w-full bg-primary text-primary-foreground font-semibold">
+                    Demander une démo
+                  </Button>
+                </Link>
               </div>
             </nav>
           </div>
