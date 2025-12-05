@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, Lock, Home, Save, Eye, Monitor, Tablet, Smartphone, RotateCcw } from "lucide-react";
+import { LogOut, Lock, Home, Save, Eye, Monitor, Tablet, Smartphone, RotateCcw, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import GrapesEditor from "@/components/admin/GrapesEditor";
+import PagesDashboard from "@/components/admin/PagesDashboard";
+import creavisuelLogo from "@/assets/logo-creavisuel2025.png";
 import "@/components/admin/GrapesEditorStyles.css";
 
 const AdminLogin = () => {
@@ -28,8 +30,8 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-8 h-8 text-primary" />
+          <div className="flex justify-center mb-4">
+            <img src={creavisuelLogo} alt="CréaVisuel" className="h-12" />
           </div>
           <CardTitle className="text-2xl">Admin CréaVisuel</CardTitle>
           <p className="text-muted-foreground">Connectez-vous pour gérer le contenu</p>
@@ -51,12 +53,16 @@ const AdminLogin = () => {
   );
 };
 
+type AdminView = "dashboard" | "editor";
+
 const AdminDashboard = () => {
   const { logout } = useAuth();
   const { content } = useContent();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [editorKey, setEditorKey] = useState(0);
+  const [currentView, setCurrentView] = useState<AdminView>("dashboard");
+  const [editingPageId, setEditingPageId] = useState<string | null>(null);
 
   const handleSave = (html: string, css: string) => {
     localStorage.setItem("creavisuel-gjs-html", html);
@@ -83,12 +89,54 @@ const AdminDashboard = () => {
     window.open("/", "_blank");
   };
 
+  const handleEditPage = (pageId: string) => {
+    setEditingPageId(pageId);
+    setCurrentView("editor");
+  };
+
+  const handleBackToDashboard = () => {
+    setCurrentView("dashboard");
+    setEditingPageId(null);
+  };
+
+  if (currentView === "dashboard") {
+    return (
+      <div className="relative">
+        {/* Logout button */}
+        <div className="absolute top-4 right-4 z-20">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-gray-400 hover:text-white hover:bg-[#3a3a3a]"
+            onClick={logout}
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Déconnexion
+          </Button>
+        </div>
+        <PagesDashboard onEditPage={handleEditPage} />
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-[#1a1a1a]">
       {/* Top Toolbar */}
       <header className="h-12 bg-[#2a2a2a] border-b border-[#3a3a3a] flex items-center justify-between px-4 shrink-0">
         <div className="flex items-center gap-4">
-          <h1 className="text-white font-semibold text-sm">CréaVisuel Editor</h1>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="h-8 text-gray-300 hover:text-white hover:bg-[#3a3a3a]"
+            onClick={handleBackToDashboard}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Dashboard
+          </Button>
+          <div className="h-4 w-px bg-[#4a4a4a]" />
+          <h1 className="text-white font-semibold text-sm">
+            Édition: {editingPageId === "home" ? "Page d'accueil" : editingPageId}
+          </h1>
           <div className="h-4 w-px bg-[#4a4a4a]" />
           <div className="flex items-center gap-1">
             <Button 
