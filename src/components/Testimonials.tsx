@@ -1,47 +1,30 @@
 import { Quote, Star } from "lucide-react";
-
-const testimonials = [
-  {
-    quote: "Depuis que j'utilise CréaVisuel pour mon salon de coiffure, ma présence sur Instagram a explosé ! Je gagne un temps fou et mes publications sont bien plus professionnelles.",
-    author: "Marie",
-    business: "Salon Éclat Capillaire",
-    rating: 5,
-  },
-  {
-    quote: "En tant que restaurateur, je n'avais jamais le temps de m'occuper des réseaux sociaux. Avec CréaVisuel, je publie tous les jours notre menu et nos spécialités en quelques clics. Résultat : +30% de nouveaux clients en 3 mois !",
-    author: "Thomas",
-    business: "Restaurant La Table Gourmande",
-    rating: 5,
-  },
-  {
-    quote: "L'IA comprend parfaitement les besoins de mon institut de beauté. Les textes générés sont vraiment pertinents et les images sont magnifiques. Mes clientes adorent !",
-    author: "Sophie",
-    business: "Institut Harmonie",
-    rating: 5,
-  },
-];
+import { useContent } from "@/contexts/ContentContext";
 
 const Testimonials = () => {
+  const { content } = useContent();
+  const { testimonials } = content;
+
   return (
     <section id="testimonials" className="py-20 lg:py-32 bg-secondary text-secondary-foreground">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
           <span className="inline-block px-4 py-2 rounded-full bg-primary/20 text-primary font-medium text-sm mb-4">
-            Témoignages
+            {testimonials.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6">
-            Ils ont transformé leur{" "}
-            <span className="text-primary">communication digitale</span>
+            {testimonials.title}{" "}
+            <span className="text-primary">{testimonials.titleHighlight}</span>
           </h2>
           <p className="text-lg text-secondary-foreground/70">
-            Découvrez comment nos clients utilisent CréaVisuel au quotidien.
+            {testimonials.description}
           </p>
         </div>
 
         {/* Testimonials grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.items.map((testimonial, index) => (
             <div
               key={testimonial.author}
               className="relative bg-secondary-foreground/5 rounded-2xl p-8 border border-secondary-foreground/10 hover:border-primary/30 transition-all duration-300"

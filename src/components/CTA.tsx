@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useContent } from "@/contexts/ContentContext";
 
 const CTA = () => {
+  const { content } = useContent();
+  const { cta } = content;
+
   return (
     <section className="py-20 lg:py-32 bg-background relative overflow-hidden">
       {/* Background decorations */}
@@ -17,22 +21,21 @@ const CTA = () => {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-foreground mb-6">
-            Concentrez-vous sur{" "}
-            <span className="text-gradient">votre métier</span>
+            {cta.title}{" "}
+            <span className="text-gradient">{cta.titleHighlight}</span>
           </h2>
           
           <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            Ne laissez plus le manque de temps ou d'inspiration freiner votre présence 
-            sur les réseaux sociaux. CréaVisuel s'occupe de tout pour vous.
+            {cta.description}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="xl">
-              Demander une démo gratuite
+              {cta.ctaPrimary}
               <ArrowRight className="w-5 h-5" />
             </Button>
             <Button variant="heroOutline" size="xl">
-              Créer votre compte
+              {cta.ctaSecondary}
             </Button>
           </div>
 
