@@ -3,26 +3,30 @@ import grapesjs, { Editor } from "grapesjs";
 import "grapesjs/dist/css/grapes.min.css";
 import "grapesjs-preset-webpage";
 import { SiteContent } from "@/content/siteContent";
-import { generateSiteHtml } from "@/lib/contentToHtml";
+import { generatePageHtml } from "@/lib/contentToHtml";
 
 interface GrapesEditorProps {
+  pageId: string;
   onSave?: (html: string, css: string) => void;
   initialContent?: SiteContent;
 }
 
-const GrapesEditor = ({ onSave, initialContent }: GrapesEditorProps) => {
+const GrapesEditor = ({ pageId, onSave, initialContent }: GrapesEditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
+
+  // Storage key based on page ID
+  const getStorageKey = (suffix: string) => `creavisuel-gjs-${pageId}-${suffix}`;
 
   useEffect(() => {
     if (!editorRef.current) return;
 
-    // Check if there's saved content in localStorage
-    const savedHtml = localStorage.getItem("creavisuel-gjs-html");
-    const savedCss = localStorage.getItem("creavisuel-gjs-css");
+    // Check if there's saved content for THIS PAGE in localStorage
+    const savedHtml = localStorage.getItem(getStorageKey("html"));
+    const savedCss = localStorage.getItem(getStorageKey("css"));
     
-    // Generate initial HTML from content if no saved version exists
-    const initialHtml = savedHtml || (initialContent ? generateSiteHtml(initialContent) : "");
+    // Generate initial HTML from content if no saved version exists for this page
+    const initialHtml = savedHtml || (initialContent ? generatePageHtml(pageId, initialContent) : "");
     const initialCss = savedCss || "";
 
     const gjsEditor = grapesjs.init({
@@ -30,7 +34,7 @@ const GrapesEditor = ({ onSave, initialContent }: GrapesEditorProps) => {
       height: "100%",
       width: "auto",
       fromElement: false,
-      storageManager: false, // We'll handle storage manually
+      storageManager: false,
       plugins: ["grapesjs-preset-webpage"],
       pluginsOpts: {
         "grapesjs-preset-webpage": {
@@ -301,34 +305,37 @@ const GrapesEditor = ({ onSave, initialContent }: GrapesEditorProps) => {
       `,
     });
 
-    // Auto-save on changes
+    // Auto-save on changes for this specific page
     gjsEditor.on("storage:store", () => {
       const html = gjsEditor.getHtml();
       const css = gjsEditor.getCss();
-      localStorage.setItem("creavisuel-gjs-html", html);
-      localStorage.setItem("creavisuel-gjs-css", css || "");
+      localStorage.setItem(getStorageKey("html"), html);
+      localStorage.setItem(getStorageKey("css"), css || "");
     });
 
     // Save shortcut (Ctrl+S)
-    document.addEventListener("keydown", (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "s") {
         e.preventDefault();
         const html = gjsEditor.getHtml();
         const css = gjsEditor.getCss();
-        localStorage.setItem("creavisuel-gjs-html", html);
-        localStorage.setItem("creavisuel-gjs-css", css || "");
+        localStorage.setItem(getStorageKey("html"), html);
+        localStorage.setItem(getStorageKey("css"), css || "");
         if (onSave) {
           onSave(html, css || "");
         }
       }
-    });
+    };
+    
+    document.addEventListener("keydown", handleKeyDown);
 
     setEditor(gjsEditor);
 
     return () => {
+      document.removeEventListener("keydown", handleKeyDown);
       gjsEditor.destroy();
     };
-  }, [initialContent]);
+  }, [pageId, initialContent]);
 
   return (
     <div className="gjs-editor-container flex h-full bg-[#1a1a1a]">
