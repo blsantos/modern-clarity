@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import creavisuelLogo from "@/assets/creavisuel-logo.png";
 import { useContent } from "@/contexts/ContentContext";
 import { Link } from "react-router-dom";
+import BackgroundVideo from "./BackgroundVideo";
 
 const Hero = () => {
   const { content } = useContent();
@@ -16,7 +17,16 @@ const Hero = () => {
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: "-2s" }} />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      {/* Robot mascot videos - subtle background */}
+      <BackgroundVideo 
+        src="/videos/robot-dancing.mp4" 
+        position="bottom-left" 
+        opacity={0.12} 
+        size="lg"
+        className="hidden lg:block"
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center min-h-[calc(100vh-5rem)]">
           {/* Text Content */}
           <div className="order-2 lg:order-1 text-center lg:text-left">
@@ -80,7 +90,7 @@ const Hero = () => {
       </div>
 
       {/* Wave decoration */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 z-10">
         <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
           <path d="M0 120L48 105C96 90 192 60 288 45C384 30 480 30 576 37.5C672 45 768 60 864 67.5C960 75 1056 75 1152 67.5C1248 60 1344 45 1392 37.5L1440 30V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0Z" fill="hsl(var(--background))"/>
         </svg>

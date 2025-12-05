@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BackgroundVideo from "@/components/BackgroundVideo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,8 +39,16 @@ const Contact = () => {
       <Header />
       <main className="pt-24">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="relative py-20 bg-gradient-to-b from-primary/5 to-background overflow-hidden">
+          <BackgroundVideo 
+            src="/videos/robot-wave.mp4" 
+            position="right" 
+            opacity={0.1} 
+            size="lg"
+            className="hidden lg:block"
+          />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-6">
               Contact
             </span>

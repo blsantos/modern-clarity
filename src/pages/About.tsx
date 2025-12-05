@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BackgroundVideo from "@/components/BackgroundVideo";
 import { Heart, Shield, Lightbulb, Users } from "lucide-react";
 import brunoProfile from "@/assets/bruno-profile.jpg";
 
@@ -32,8 +33,17 @@ const About = () => {
       <Header />
       <main className="pt-24">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-b from-accent/5 to-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative py-20 bg-gradient-to-b from-accent/5 to-background overflow-hidden">
+          {/* Robot mascot video */}
+          <BackgroundVideo 
+            src="/videos/robot-animation.mp4" 
+            position="bottom-right" 
+            opacity={0.12} 
+            size="lg"
+            className="hidden lg:block"
+          />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent font-semibold text-sm mb-6">
@@ -96,8 +106,16 @@ const About = () => {
         </section>
 
         {/* Mission Section */}
-        <section className="py-20 bg-muted/50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative py-20 bg-muted/50 overflow-hidden">
+          <BackgroundVideo 
+            src="/videos/robot-dancing.mp4" 
+            position="left" 
+            opacity={0.08} 
+            size="xl"
+            className="hidden md:block -ml-20"
+          />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
                 Notre Mission
