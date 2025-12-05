@@ -84,10 +84,10 @@ const Services = () => {
           {/* Robot mascot video */}
           <BackgroundVideo 
             src="/videos/robot-present.mp4" 
-            position="right" 
-            opacity={0.1} 
-            size="xl"
-            className="hidden lg:block -mr-10"
+            position="bottom-right" 
+            opacity={0.35} 
+            size="lg"
+            className="hidden lg:block"
           />
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -137,9 +137,9 @@ const Services = () => {
         <section className="relative py-20 bg-secondary overflow-hidden">
           <BackgroundVideo 
             src="/videos/robot-float.mp4" 
-            position="left" 
-            opacity={0.1} 
-            size="lg"
+            position="bottom-left" 
+            opacity={0.3} 
+            size="md"
             className="hidden md:block"
           />
           

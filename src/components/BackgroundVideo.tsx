@@ -9,7 +9,7 @@ interface BackgroundVideoProps {
 const BackgroundVideo = ({ 
   src, 
   position = 'right', 
-  opacity = 0.15, 
+  opacity = 0.35, 
   size = 'md',
   className = ''
 }: BackgroundVideoProps) => {

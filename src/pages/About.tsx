@@ -37,9 +37,9 @@ const About = () => {
           {/* Robot mascot video */}
           <BackgroundVideo 
             src="/videos/robot-animation.mp4" 
-            position="bottom-right" 
-            opacity={0.12} 
-            size="lg"
+            position="right" 
+            opacity={0.35} 
+            size="md"
             className="hidden lg:block"
           />
           
@@ -109,10 +109,10 @@ const About = () => {
         <section className="relative py-20 bg-muted/50 overflow-hidden">
           <BackgroundVideo 
             src="/videos/robot-dancing.mp4" 
-            position="left" 
-            opacity={0.08} 
-            size="xl"
-            className="hidden md:block -ml-20"
+            position="bottom-left" 
+            opacity={0.3} 
+            size="lg"
+            className="hidden md:block"
           />
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

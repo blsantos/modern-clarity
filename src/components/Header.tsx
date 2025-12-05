@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logotype from "@/assets/logotype.png";
+import creavisuelLogo from "@/assets/creavisuel-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <img src={logotype} alt="B2Santos Communication" className="h-10 lg:h-12 w-auto" />
+            <img src={creavisuelLogo} alt="CréaVisuel" className="h-8 lg:h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}

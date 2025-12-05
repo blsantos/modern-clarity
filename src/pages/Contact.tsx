@@ -42,9 +42,9 @@ const Contact = () => {
         <section className="relative py-20 bg-gradient-to-b from-primary/5 to-background overflow-hidden">
           <BackgroundVideo 
             src="/videos/robot-wave.mp4" 
-            position="right" 
-            opacity={0.1} 
-            size="lg"
+            position="bottom-right" 
+            opacity={0.4} 
+            size="md"
             className="hidden lg:block"
           />
           
