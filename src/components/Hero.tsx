@@ -20,10 +20,10 @@ const Hero = () => {
       {/* Robot mascot videos - subtle background */}
       <BackgroundVideo 
         src="/videos/robot-dancing.mp4" 
-        position="bottom-left" 
-        opacity={0.12} 
+        position="bottom-right" 
+        opacity={0.4} 
         size="lg"
-        className="hidden lg:block"
+        className="hidden lg:block mr-20"
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

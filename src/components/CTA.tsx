@@ -18,10 +18,10 @@ const CTA = () => {
       {/* Robot mascot video */}
       <BackgroundVideo 
         src="/videos/robot-float.mp4" 
-        position="right" 
-        opacity={0.12} 
-        size="xl"
-        className="hidden lg:block -mr-10"
+        position="bottom-right" 
+        opacity={0.35} 
+        size="lg"
+        className="hidden lg:block"
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
