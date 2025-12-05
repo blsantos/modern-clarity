@@ -9,7 +9,7 @@ const services = [
   {
     icon: Sparkles,
     title: "Visuels Automatisés",
-    description: "Génération automatique de visuels basés sur vos données via APItemplate et Integromat.",
+    description: "Génération automatique de visuels basés sur vos données grâce à notre technologie IA.",
     features: [
       "12 visuels automatisés par mois",
       "Templates personnalisés",
@@ -56,7 +56,7 @@ const services = [
     description: "Mise en place des outils et plateformes pour une gestion efficace.",
     features: [
       "Configuration initiale",
-      "Hub de gestion (Notion/Airtable)",
+      "Hub de gestion dédié",
       "Workflows automatisés",
       "Formation incluse"
     ]
