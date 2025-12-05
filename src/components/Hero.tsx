@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
-import creavisuelLogo from "@/assets/creavisuel-logo.png";
 import { useContent } from "@/contexts/ContentContext";
 import { Link } from "react-router-dom";
 import BackgroundVideo from "./BackgroundVideo";
@@ -27,9 +26,9 @@ const Hero = () => {
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center min-h-[calc(100vh-5rem)]">
+        <div className="flex items-center justify-center min-h-[calc(100vh-5rem)]">
           {/* Text Content */}
-          <div className="order-2 lg:order-1 text-center lg:text-left">
+          <div className="text-center max-w-4xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-6">
               <Sparkles className="w-4 h-4" />
               <span>{hero.badge}</span>
@@ -64,7 +63,7 @@ const Hero = () => {
             {/* Social proof */}
             <div className="mt-10 pt-8 border-t border-border">
               <p className="text-sm font-medium text-muted-foreground mb-4">Déjà adopté par de nombreux professionnels</p>
-              <div className="flex items-center justify-center lg:justify-start gap-8">
+              <div className="flex items-center justify-center gap-8">
                 {hero.stats.map((stat, index) => (
                   <div key={index} className="text-center">
                     <div className="text-2xl font-extrabold text-foreground">{stat.value}</div>
@@ -72,18 +71,6 @@ const Hero = () => {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Logo inline with title */}
-          <div className="order-1 lg:order-2 flex items-center justify-center lg:justify-start">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl scale-75" />
-              <img
-                src={creavisuelLogo}
-                alt="CréaVisuel - Agent IA pour réseaux sociaux"
-                className="relative w-32 sm:w-40 lg:w-48 animate-float drop-shadow-xl"
-              />
             </div>
           </div>
         </div>
