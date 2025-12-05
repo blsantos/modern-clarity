@@ -9,6 +9,7 @@ import { LogOut, Lock, Home, Save, Eye, Monitor, Tablet, Smartphone, RotateCcw, 
 import { useNavigate } from "react-router-dom";
 import GrapesEditor from "@/components/admin/GrapesEditor";
 import PagesDashboard from "@/components/admin/PagesDashboard";
+import { getPageName } from "@/lib/contentToHtml";
 import creavisuelLogo from "@/assets/logo-creavisuel2025.png";
 import "@/components/admin/GrapesEditorStyles.css";
 
@@ -62,41 +63,52 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [editorKey, setEditorKey] = useState(0);
   const [currentView, setCurrentView] = useState<AdminView>("dashboard");
-  const [editingPageId, setEditingPageId] = useState<string | null>(null);
+  const [editingPageId, setEditingPageId] = useState<string>("home");
 
   const handleSave = (html: string, css: string) => {
-    localStorage.setItem("creavisuel-gjs-html", html);
-    localStorage.setItem("creavisuel-gjs-css", css);
     toast({ 
       title: "Page sauvegardée", 
-      description: "Vos modifications ont été enregistrées localement." 
+      description: `${getPageName(editingPageId)} a été enregistrée.` 
     });
   };
 
   const handleReset = () => {
-    localStorage.removeItem("creavisuel-gjs-html");
-    localStorage.removeItem("creavisuel-gjs-css");
-    localStorage.removeItem("creavisuel-gjs-components");
-    localStorage.removeItem("creavisuel-gjs-styles");
+    // Clear storage for current page only
+    localStorage.removeItem(`creavisuel-gjs-${editingPageId}-html`);
+    localStorage.removeItem(`creavisuel-gjs-${editingPageId}-css`);
     setEditorKey(prev => prev + 1);
     toast({ 
       title: "Éditeur réinitialisé", 
-      description: "Le contenu original a été restauré." 
+      description: `Le contenu original de ${getPageName(editingPageId)} a été restauré.` 
     });
   };
 
   const handlePreview = () => {
-    window.open("/", "_blank");
+    // Open the relevant page in preview
+    const previewUrls: Record<string, string> = {
+      home: "/",
+      services: "/services",
+      about: "/about",
+      contact: "/contact",
+      hero: "/",
+      benefits: "/",
+      "how-it-works": "/",
+      industries: "/",
+      pricing: "/#pricing",
+      testimonials: "/",
+      cta: "/",
+    };
+    window.open(previewUrls[editingPageId] || "/", "_blank");
   };
 
   const handleEditPage = (pageId: string) => {
     setEditingPageId(pageId);
+    setEditorKey(prev => prev + 1); // Force editor reload for new page
     setCurrentView("editor");
   };
 
   const handleBackToDashboard = () => {
     setCurrentView("dashboard");
-    setEditingPageId(null);
   };
 
   if (currentView === "dashboard") {
@@ -135,7 +147,7 @@ const AdminDashboard = () => {
           </Button>
           <div className="h-4 w-px bg-[#4a4a4a]" />
           <h1 className="text-white font-semibold text-sm">
-            Édition: {editingPageId === "home" ? "Page d'accueil" : editingPageId}
+            Édition: {getPageName(editingPageId)}
           </h1>
           <div className="h-4 w-px bg-[#4a4a4a]" />
           <div className="flex items-center gap-1">
@@ -221,7 +233,12 @@ const AdminDashboard = () => {
 
       {/* Editor */}
       <div className="flex-1 overflow-hidden">
-        <GrapesEditor key={editorKey} onSave={handleSave} initialContent={content} />
+        <GrapesEditor 
+          key={editorKey} 
+          pageId={editingPageId}
+          onSave={handleSave} 
+          initialContent={content} 
+        />
       </div>
     </div>
   );
