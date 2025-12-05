@@ -75,14 +75,14 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Image */}
-          <div className="order-1 lg:order-2 flex justify-center">
+          {/* Logo inline with title */}
+          <div className="order-1 lg:order-2 flex items-center justify-center lg:justify-start">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl scale-75" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl scale-75" />
               <img
                 src={creavisuelLogo}
                 alt="CréaVisuel - Agent IA pour réseaux sociaux"
-                className="relative w-full max-w-md lg:max-w-lg animate-float drop-shadow-2xl"
+                className="relative w-32 sm:w-40 lg:w-48 animate-float drop-shadow-xl"
               />
             </div>
           </div>
