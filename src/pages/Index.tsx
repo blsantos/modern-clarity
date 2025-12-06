@@ -10,9 +10,27 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative">
+      {/* Global Sci-Fi Grid Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}
+        />
+        {/* Scanning line effect */}
+        <div className="absolute inset-0 animate-scan-line opacity-10">
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+        </div>
+      </div>
+
       <Header />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <HowItWorks />
         <Industries />
