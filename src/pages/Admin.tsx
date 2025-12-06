@@ -4,11 +4,13 @@ import { useContent } from "@/contexts/ContentContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, Lock, Home, Save, Eye, Monitor, Tablet, Smartphone, RotateCcw, ArrowLeft } from "lucide-react";
+import { LogOut, Lock, Home, Save, Eye, Monitor, Tablet, Smartphone, RotateCcw, ArrowLeft, LayoutDashboard, Wrench } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import GrapesEditor from "@/components/admin/GrapesEditor";
 import PagesDashboard from "@/components/admin/PagesDashboard";
+import ToolsPanel from "@/components/admin/tools/ToolsPanel";
 import { getPageName } from "@/lib/contentToHtml";
 import creavisuelLogo from "@/assets/logo-creavisuel2025.png";
 import "@/components/admin/GrapesEditorStyles.css";
@@ -55,6 +57,7 @@ const AdminLogin = () => {
 };
 
 type AdminView = "dashboard" | "editor";
+type AdminTab = "pages" | "tools";
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
@@ -64,6 +67,7 @@ const AdminDashboard = () => {
   const [editorKey, setEditorKey] = useState(0);
   const [currentView, setCurrentView] = useState<AdminView>("dashboard");
   const [editingPageId, setEditingPageId] = useState<string>("home");
+  const [activeTab, setActiveTab] = useState<AdminTab>("pages");
 
   const handleSave = (html: string, css: string) => {
     toast({ 
@@ -73,7 +77,6 @@ const AdminDashboard = () => {
   };
 
   const handleReset = () => {
-    // Clear storage for current page only
     localStorage.removeItem(`creavisuel-gjs-${editingPageId}-html`);
     localStorage.removeItem(`creavisuel-gjs-${editingPageId}-css`);
     setEditorKey(prev => prev + 1);
@@ -84,7 +87,6 @@ const AdminDashboard = () => {
   };
 
   const handlePreview = () => {
-    // Open the relevant page in preview
     const previewUrls: Record<string, string> = {
       home: "/",
       services: "/services",
@@ -103,7 +105,7 @@ const AdminDashboard = () => {
 
   const handleEditPage = (pageId: string) => {
     setEditingPageId(pageId);
-    setEditorKey(prev => prev + 1); // Force editor reload for new page
+    setEditorKey(prev => prev + 1);
     setCurrentView("editor");
   };
 
@@ -113,9 +115,14 @@ const AdminDashboard = () => {
 
   if (currentView === "dashboard") {
     return (
-      <div className="relative">
-        {/* Logout button */}
-        <div className="absolute top-4 right-4 z-20">
+      <div className="h-screen bg-[#1a1a1a] flex flex-col">
+        {/* Header */}
+        <header className="h-14 bg-[#2a2a2a] border-b border-[#3a3a3a] flex items-center justify-between px-6 shrink-0">
+          <div className="flex items-center gap-4">
+            <img src={creavisuelLogo} alt="CréaVisuel" className="h-8" />
+            <div className="h-6 w-px bg-[#4a4a4a]" />
+            <h1 className="text-white font-semibold">Administration</h1>
+          </div>
           <Button 
             variant="ghost" 
             size="sm" 
@@ -125,8 +132,37 @@ const AdminDashboard = () => {
             <LogOut className="w-4 h-4 mr-2" />
             Déconnexion
           </Button>
-        </div>
-        <PagesDashboard onEditPage={handleEditPage} />
+        </header>
+
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as AdminTab)} className="flex-1 flex flex-col">
+          <div className="bg-[#2a2a2a] border-b border-[#3a3a3a] px-6">
+            <TabsList className="bg-transparent h-12 p-0 gap-4">
+              <TabsTrigger
+                value="pages"
+                className="data-[state=active]:bg-transparent data-[state=active]:text-white text-gray-400 px-0 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-primary"
+              >
+                <LayoutDashboard className="w-4 h-4 mr-2" />
+                Pages du site
+              </TabsTrigger>
+              <TabsTrigger
+                value="tools"
+                className="data-[state=active]:bg-transparent data-[state=active]:text-white text-gray-400 px-0 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-primary"
+              >
+                <Wrench className="w-4 h-4 mr-2" />
+                Outils Média
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          <TabsContent value="pages" className="flex-1 mt-0">
+            <PagesDashboard onEditPage={handleEditPage} />
+          </TabsContent>
+          
+          <TabsContent value="tools" className="flex-1 mt-0 h-[calc(100vh-112px)]">
+            <ToolsPanel />
+          </TabsContent>
+        </Tabs>
       </div>
     );
   }
