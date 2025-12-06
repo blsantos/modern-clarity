@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,99 +28,101 @@ const MediaTools = () => {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {/* Transcription */}
-      <Card className="bg-[#2a2a2a] border-[#3a3a3a] lg:col-span-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Mic className="w-5 h-5 text-primary" />
-            Transcription Audio/Vidéo
-          </CardTitle>
-          <CardDescription>Convertir l'audio en texte avec IA</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label className="text-gray-300">Fichier média</Label>
-                <Input 
-                  type="file" 
-                  accept="audio/*,video/*"
-                  className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-gray-300">Langue</Label>
-                <Select defaultValue="fr">
-                  <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="fr">Français</SelectItem>
-                    <SelectItem value="en">Anglais</SelectItem>
-                    <SelectItem value="es">Espagnol</SelectItem>
-                    <SelectItem value="de">Allemand</SelectItem>
-                    <SelectItem value="auto">Auto-détection</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-gray-300">Modèle</Label>
-                <Select defaultValue="whisper">
-                  <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="whisper">Whisper (OpenAI)</SelectItem>
-                    <SelectItem value="whisper-large">Whisper Large</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button 
-                className="w-full" 
-                onClick={() => handleAction("Transcription")}
-                disabled={loading === "Transcription"}
-              >
-                {loading === "Transcription" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-                Transcrire
-              </Button>
-            </div>
+      <div className="scifi-card p-6 group lg:col-span-2">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-500/20 to-amber-500/20 flex items-center justify-center border border-yellow-500/20 group-hover:border-yellow-500/40 transition-all duration-300">
+            <Mic className="w-5 h-5 text-yellow-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-white">Transcription Audio/Vidéo</h3>
+            <p className="text-sm text-slate-400">Convertir l'audio en texte avec IA</p>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label className="text-gray-300">Résultat</Label>
-              <Textarea 
-                value={transcription}
-                readOnly
-                placeholder="La transcription apparaîtra ici..."
-                className="bg-[#1a1a1a] border-[#3a3a3a] text-white min-h-[200px]"
+              <Label className="text-slate-300 text-sm">Fichier média</Label>
+              <Input 
+                type="file" 
+                accept="audio/*,video/*"
+                className="bg-slate-900/50 border-white/10 text-white file:bg-yellow-500/20 file:text-yellow-400 file:border-0 file:rounded-md hover:border-yellow-500/30 transition-colors"
               />
             </div>
+            <div className="space-y-2">
+              <Label className="text-slate-300 text-sm">Langue</Label>
+              <Select defaultValue="fr">
+                <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-yellow-500/30 transition-colors">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-900 border-white/10">
+                  <SelectItem value="fr">Français</SelectItem>
+                  <SelectItem value="en">Anglais</SelectItem>
+                  <SelectItem value="es">Espagnol</SelectItem>
+                  <SelectItem value="de">Allemand</SelectItem>
+                  <SelectItem value="auto">Auto-détection</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-slate-300 text-sm">Modèle</Label>
+              <Select defaultValue="whisper">
+                <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-yellow-500/30 transition-colors">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-900 border-white/10">
+                  <SelectItem value="whisper">Whisper (OpenAI)</SelectItem>
+                  <SelectItem value="whisper-large">Whisper Large</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Button 
+              className="w-full scifi-button bg-gradient-to-r from-yellow-500/20 to-amber-500/20 hover:from-yellow-500/30 hover:to-amber-500/30 text-yellow-400 border-yellow-500/30"
+              onClick={() => handleAction("Transcription")}
+              disabled={loading === "Transcription"}
+            >
+              {loading === "Transcription" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
+              Transcrire
+            </Button>
           </div>
-        </CardContent>
-      </Card>
+          <div className="space-y-2">
+            <Label className="text-slate-300 text-sm">Résultat</Label>
+            <Textarea 
+              value={transcription}
+              readOnly
+              placeholder="La transcription apparaîtra ici..."
+              className="bg-slate-900/80 border-white/10 text-white min-h-[200px]"
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Traduction */}
-      <Card className="bg-[#2a2a2a] border-[#3a3a3a]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Languages className="w-5 h-5 text-primary" />
-            Traduction
-          </CardTitle>
-          <CardDescription>Traduire du contenu média</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <div className="scifi-card p-6 group">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center border border-cyan-500/20 group-hover:border-cyan-500/40 transition-all duration-300">
+            <Languages className="w-5 h-5 text-cyan-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-white">Traduction</h3>
+            <p className="text-sm text-slate-400">Traduire du contenu média</p>
+          </div>
+        </div>
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-gray-300">Fichier source</Label>
+            <Label className="text-slate-300 text-sm">Fichier source</Label>
             <Input 
               type="file" 
               accept="audio/*,video/*,.srt,.vtt"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
+              className="bg-slate-900/50 border-white/10 text-white file:bg-cyan-500/20 file:text-cyan-400 file:border-0 file:rounded-md hover:border-cyan-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Langue source</Label>
+            <Label className="text-slate-300 text-sm">Langue source</Label>
             <Select defaultValue="auto">
-              <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-cyan-500/30 transition-colors">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-slate-900 border-white/10">
                 <SelectItem value="auto">Auto-détection</SelectItem>
                 <SelectItem value="en">Anglais</SelectItem>
                 <SelectItem value="fr">Français</SelectItem>
@@ -130,12 +131,12 @@ const MediaTools = () => {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Langue cible</Label>
+            <Label className="text-slate-300 text-sm">Langue cible</Label>
             <Select defaultValue="fr">
-              <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-cyan-500/30 transition-colors">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-slate-900 border-white/10">
                 <SelectItem value="fr">Français</SelectItem>
                 <SelectItem value="en">Anglais</SelectItem>
                 <SelectItem value="es">Espagnol</SelectItem>
@@ -144,71 +145,72 @@ const MediaTools = () => {
             </Select>
           </div>
           <Button 
-            className="w-full" 
+            className="w-full scifi-button bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500/30 hover:to-blue-500/30 text-cyan-400 border-cyan-500/30"
             onClick={() => handleAction("Traduction")}
             disabled={loading === "Traduction"}
           >
             {loading === "Traduction" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Traduire
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Génération de captions */}
-      <Card className="bg-[#2a2a2a] border-[#3a3a3a] lg:col-span-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Captions className="w-5 h-5 text-primary" />
-            Génération de Captions
-          </CardTitle>
-          <CardDescription>Générer automatiquement des sous-titres</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label className="text-gray-300">Fichier vidéo</Label>
-              <Input 
-                type="file" 
-                accept="video/*"
-                className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-gray-300">Format de sortie</Label>
-              <Select defaultValue="srt">
-                <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="srt">SRT</SelectItem>
-                  <SelectItem value="vtt">VTT</SelectItem>
-                  <SelectItem value="ass">ASS</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-gray-300">Options</Label>
-              <Select defaultValue="timestamps">
-                <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="timestamps">Avec timestamps</SelectItem>
-                  <SelectItem value="speakers">Avec locuteurs</SelectItem>
-                  <SelectItem value="both">Timestamps + Locuteurs</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+      <div className="scifi-card p-6 group lg:col-span-2">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/20 group-hover:border-purple-500/40 transition-all duration-300">
+            <Captions className="w-5 h-5 text-purple-400" />
           </div>
-          <Button 
-            onClick={() => handleAction("Génération captions")}
-            disabled={loading === "Génération captions"}
-          >
-            {loading === "Génération captions" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-            Générer les captions
-          </Button>
-        </CardContent>
-      </Card>
+          <div>
+            <h3 className="font-semibold text-white">Génération de Captions</h3>
+            <p className="text-sm text-slate-400">Générer automatiquement des sous-titres</p>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <Label className="text-slate-300 text-sm">Fichier vidéo</Label>
+            <Input 
+              type="file" 
+              accept="video/*"
+              className="bg-slate-900/50 border-white/10 text-white file:bg-purple-500/20 file:text-purple-400 file:border-0 file:rounded-md hover:border-purple-500/30 transition-colors"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-slate-300 text-sm">Format de sortie</Label>
+            <Select defaultValue="srt">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-purple-500/30 transition-colors">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-900 border-white/10">
+                <SelectItem value="srt">SRT</SelectItem>
+                <SelectItem value="vtt">VTT</SelectItem>
+                <SelectItem value="ass">ASS</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label className="text-slate-300 text-sm">Options</Label>
+            <Select defaultValue="timestamps">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-purple-500/30 transition-colors">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-900 border-white/10">
+                <SelectItem value="timestamps">Avec timestamps</SelectItem>
+                <SelectItem value="speakers">Avec locuteurs</SelectItem>
+                <SelectItem value="both">Timestamps + Locuteurs</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <Button 
+          className="mt-4 scifi-button bg-gradient-to-r from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-400 border-purple-500/30"
+          onClick={() => handleAction("Génération captions")}
+          disabled={loading === "Génération captions"}
+        >
+          {loading === "Génération captions" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
+          Générer les captions
+        </Button>
+      </div>
     </div>
   );
 };

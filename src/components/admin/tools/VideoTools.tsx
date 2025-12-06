@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Film, Image, Subtitles, Layers, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -25,31 +23,33 @@ const VideoTools = () => {
   return (
     <div className="grid gap-6 md:grid-cols-2">
       {/* Combinaison de vidéos */}
-      <Card className="bg-[#2a2a2a] border-[#3a3a3a]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Layers className="w-5 h-5 text-primary" />
-            Combinaison de vidéos
-          </CardTitle>
-          <CardDescription>Fusionner plusieurs vidéos en une seule</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <div className="scifi-card p-6 group">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/20 group-hover:border-purple-500/40 transition-all duration-300">
+            <Layers className="w-5 h-5 text-purple-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-white">Combinaison de vidéos</h3>
+            <p className="text-sm text-slate-400">Fusionner plusieurs vidéos en une seule</p>
+          </div>
+        </div>
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-gray-300">Fichiers vidéo</Label>
+            <Label className="text-slate-300 text-sm">Fichiers vidéo</Label>
             <Input 
               type="file" 
               multiple 
               accept="video/*"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
+              className="bg-slate-900/50 border-white/10 text-white file:bg-purple-500/20 file:text-purple-400 file:border-0 file:rounded-md hover:border-purple-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Transition</Label>
+            <Label className="text-slate-300 text-sm">Transition</Label>
             <Select defaultValue="none">
-              <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-purple-500/30 transition-colors">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-slate-900 border-white/10">
                 <SelectItem value="none">Aucune</SelectItem>
                 <SelectItem value="fade">Fondu</SelectItem>
                 <SelectItem value="dissolve">Dissolution</SelectItem>
@@ -58,51 +58,53 @@ const VideoTools = () => {
             </Select>
           </div>
           <Button 
-            className="w-full" 
+            className="w-full scifi-button bg-gradient-to-r from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-400 border-purple-500/30"
             onClick={() => handleAction("Combinaison")}
             disabled={loading === "Combinaison"}
           >
             {loading === "Combinaison" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Combiner
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Extraction de frames clés */}
-      <Card className="bg-[#2a2a2a] border-[#3a3a3a]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Image className="w-5 h-5 text-primary" />
-            Extraction de frames
-          </CardTitle>
-          <CardDescription>Extraire les images clés d'une vidéo</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <div className="scifi-card p-6 group">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center border border-green-500/20 group-hover:border-green-500/40 transition-all duration-300">
+            <Image className="w-5 h-5 text-green-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-white">Extraction de frames</h3>
+            <p className="text-sm text-slate-400">Extraire les images clés d'une vidéo</p>
+          </div>
+        </div>
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-gray-300">Fichier vidéo</Label>
+            <Label className="text-slate-300 text-sm">Fichier vidéo</Label>
             <Input 
               type="file" 
               accept="video/*"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
+              className="bg-slate-900/50 border-white/10 text-white file:bg-green-500/20 file:text-green-400 file:border-0 file:rounded-md hover:border-green-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Intervalle (secondes)</Label>
+            <Label className="text-slate-300 text-sm">Intervalle (secondes)</Label>
             <Input 
               type="number" 
               defaultValue="1"
               min="0.1"
               step="0.1"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white"
+              className="bg-slate-900/50 border-white/10 text-white hover:border-green-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Format image</Label>
+            <Label className="text-slate-300 text-sm">Format image</Label>
             <Select defaultValue="jpg">
-              <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-green-500/30 transition-colors">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-slate-900 border-white/10">
                 <SelectItem value="jpg">JPEG</SelectItem>
                 <SelectItem value="png">PNG</SelectItem>
                 <SelectItem value="webp">WebP</SelectItem>
@@ -110,49 +112,51 @@ const VideoTools = () => {
             </Select>
           </div>
           <Button 
-            className="w-full" 
+            className="w-full scifi-button bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 text-green-400 border-green-500/30"
             onClick={() => handleAction("Extraction frames")}
             disabled={loading === "Extraction frames"}
           >
             {loading === "Extraction frames" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Extraire
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Ajout de sous-titres */}
-      <Card className="bg-[#2a2a2a] border-[#3a3a3a]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Subtitles className="w-5 h-5 text-primary" />
-            Sous-titres
-          </CardTitle>
-          <CardDescription>Ajouter des sous-titres à une vidéo</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <div className="scifi-card p-6 group">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-500/20 to-amber-500/20 flex items-center justify-center border border-yellow-500/20 group-hover:border-yellow-500/40 transition-all duration-300">
+            <Subtitles className="w-5 h-5 text-yellow-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-white">Sous-titres</h3>
+            <p className="text-sm text-slate-400">Ajouter des sous-titres à une vidéo</p>
+          </div>
+        </div>
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-gray-300">Fichier vidéo</Label>
+            <Label className="text-slate-300 text-sm">Fichier vidéo</Label>
             <Input 
               type="file" 
               accept="video/*"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
+              className="bg-slate-900/50 border-white/10 text-white file:bg-yellow-500/20 file:text-yellow-400 file:border-0 file:rounded-md hover:border-yellow-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Fichier SRT/VTT</Label>
+            <Label className="text-slate-300 text-sm">Fichier SRT/VTT</Label>
             <Input 
               type="file" 
               accept=".srt,.vtt"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
+              className="bg-slate-900/50 border-white/10 text-white file:bg-yellow-500/20 file:text-yellow-400 file:border-0 file:rounded-md hover:border-yellow-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Style</Label>
+            <Label className="text-slate-300 text-sm">Style</Label>
             <Select defaultValue="default">
-              <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-yellow-500/30 transition-colors">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-slate-900 border-white/10">
                 <SelectItem value="default">Par défaut</SelectItem>
                 <SelectItem value="bold">Gras</SelectItem>
                 <SelectItem value="outline">Contour</SelectItem>
@@ -161,52 +165,54 @@ const VideoTools = () => {
             </Select>
           </div>
           <Button 
-            className="w-full" 
+            className="w-full scifi-button bg-gradient-to-r from-yellow-500/20 to-amber-500/20 hover:from-yellow-500/30 hover:to-amber-500/30 text-yellow-400 border-yellow-500/30"
             onClick={() => handleAction("Sous-titres")}
             disabled={loading === "Sous-titres"}
           >
             {loading === "Sous-titres" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Ajouter
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Image vers vidéo */}
-      <Card className="bg-[#2a2a2a] border-[#3a3a3a]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Film className="w-5 h-5 text-primary" />
-            Image vers Vidéo
-          </CardTitle>
-          <CardDescription>Créer une vidéo à partir d'images</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <div className="scifi-card p-6 group">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center border border-cyan-500/20 group-hover:border-cyan-500/40 transition-all duration-300">
+            <Film className="w-5 h-5 text-cyan-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-white">Image vers Vidéo</h3>
+            <p className="text-sm text-slate-400">Créer une vidéo à partir d'images</p>
+          </div>
+        </div>
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-gray-300">Images</Label>
+            <Label className="text-slate-300 text-sm">Images</Label>
             <Input 
               type="file" 
               multiple 
               accept="image/*"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white file:bg-primary file:text-white file:border-0"
+              className="bg-slate-900/50 border-white/10 text-white file:bg-cyan-500/20 file:text-cyan-400 file:border-0 file:rounded-md hover:border-cyan-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">Durée par image (sec)</Label>
+            <Label className="text-slate-300 text-sm">Durée par image (sec)</Label>
             <Input 
               type="number" 
               defaultValue="2"
               min="0.5"
               step="0.5"
-              className="bg-[#1a1a1a] border-[#3a3a3a] text-white"
+              className="bg-slate-900/50 border-white/10 text-white hover:border-cyan-500/30 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-300">FPS</Label>
+            <Label className="text-slate-300 text-sm">FPS</Label>
             <Select defaultValue="30">
-              <SelectTrigger className="bg-[#1a1a1a] border-[#3a3a3a] text-white">
+              <SelectTrigger className="bg-slate-900/50 border-white/10 text-white hover:border-cyan-500/30 transition-colors">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-slate-900 border-white/10">
                 <SelectItem value="24">24 fps</SelectItem>
                 <SelectItem value="30">30 fps</SelectItem>
                 <SelectItem value="60">60 fps</SelectItem>
@@ -214,15 +220,15 @@ const VideoTools = () => {
             </Select>
           </div>
           <Button 
-            className="w-full" 
+            className="w-full scifi-button bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500/30 hover:to-blue-500/30 text-cyan-400 border-cyan-500/30"
             onClick={() => handleAction("Image vers vidéo")}
             disabled={loading === "Image vers vidéo"}
           >
             {loading === "Image vers vidéo" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Créer vidéo
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
